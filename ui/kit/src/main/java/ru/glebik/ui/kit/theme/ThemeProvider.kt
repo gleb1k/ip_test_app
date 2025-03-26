@@ -7,7 +7,7 @@ import ru.glebik.ui.kit.theme.values.CornerShape
 import ru.glebik.ui.kit.theme.values.Padding
 import ru.glebik.ui.kit.theme.values.Typography
 
-object VisifyTheme {
+object AppTheme {
 
     val colors: Colors
         @Composable

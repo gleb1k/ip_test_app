@@ -6,12 +6,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 
 data class Colors(
-    val primary: Color = Color(0xFF2E7D32),
-    val secondary: Color = Color(0xFF6A1B9A),
+    val primary: Color = Color(0xFFD1DCFB),
+    val secondary: Color = Color(0xFF6503e8),
     val surface: Color = Color(0xFFFFFFFF),
     val background: Color = Color(0xFFF5F5F5),
 
-    val error: Color = Color(0xFFDB3223),
+    val error: Color = Color(0xFFd03e02),
+    val black: Color = Color(0xFF000000),
 )
 
 data class Typography(
@@ -21,12 +22,12 @@ data class Typography(
 )
 
 data class Padding(
-    val p4: Dp,
-    val p8: Dp,
-    val p12: Dp,
-    val p16: Dp,
-    val p24: Dp,
-    val p32: Dp,
+    val p4dp: Dp,
+    val p8dp: Dp,
+    val p12dp: Dp,
+    val p16dp: Dp,
+    val p24dp: Dp,
+    val p32dp: Dp,
 )
 
 data class CornerShape(

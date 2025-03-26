@@ -13,6 +13,7 @@ androidModule(
     ),
     deps = {
         impl(projects.feature.home.api)
+        impl(projects.ui.kit)
 
         impl(projects.core.ktx)
         impl(projects.core.arch)

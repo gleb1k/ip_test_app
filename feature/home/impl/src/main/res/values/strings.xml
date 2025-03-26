@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_header">Список товаров</string>
+    <string name="home_search_field_hint">Поиск товаров</string>
+    <string name="home_product_item_in_stock">На складе</string>
+    <string name="home_product_item_date_added">Дата добавления</string>
+</resources>

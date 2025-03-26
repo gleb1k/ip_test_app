@@ -1,5 +1,7 @@
 package ru.glebik.core.arch.util
 
+import ru.glebik.core.arch.MviViewModel
+
 sealed interface ViewProperty<out R> {
     data class Content<out T>(val content: T) : ViewProperty<T>
     data object Loading : ViewProperty<Nothing>
@@ -27,9 +29,9 @@ val <R> ViewProperty<R>.safeContent: R?
 val <R> ViewProperty<R>.unsafeContent: R
     get() = requireNotNull((this as? ViewProperty.Content)?.content)
 
-fun loading() = ViewProperty.Loading
+fun MviViewModel<*, *, *>.loading() = ViewProperty.Loading
 
-fun <T> content(content: T) = ViewProperty.Content(content)
+fun <T> MviViewModel<*, *, *>.content(content: T) = ViewProperty.Content(content)
 
-fun failure(errorMessage: String, error: Throwable? = null) =
+fun MviViewModel<*, *, *>.failure(errorMessage: String, error: Throwable? = null) =
     ViewProperty.Error(errorMessage, error)

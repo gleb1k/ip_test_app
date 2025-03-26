@@ -1,8 +1,13 @@
 package ru.glebik.ui.kit.theme
 
+import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 import ru.glebik.ui.kit.theme.values.Colors
 import ru.glebik.ui.kit.theme.values.CornerShape
 import ru.glebik.ui.kit.theme.values.Padding
@@ -29,6 +34,19 @@ fun AppTheme(
     val padding: Padding = basePadding
 
     val cornerShape: CornerShape = baseCornerShape
+
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+
+            (view.context as? Activity)?.window?.let { window ->
+                window.statusBarColor = colors.primary.toArgb()
+                window.navigationBarColor = colors.primary.toArgb()
+                WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
+                    !darkTheme
+            }
+        }
+    }
 
     CompositionLocalProvider(
         LocalCustomColors provides colors,

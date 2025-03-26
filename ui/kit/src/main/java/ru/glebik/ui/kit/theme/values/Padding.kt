@@ -3,10 +3,10 @@ package ru.glebik.ui.kit.theme.values
 import androidx.compose.ui.unit.dp
 
 internal val basePadding = Padding(
-    p4 = 4.dp,
-    p8 = 8.dp,
-    p12 = 12.dp,
-    p16 = 16.dp,
-    p24 = 24.dp,
-    p32 = 32.dp
+    p4dp = 4.dp,
+    p8dp = 8.dp,
+    p12dp = 12.dp,
+    p16dp = 16.dp,
+    p24dp = 24.dp,
+    p32dp = 32.dp
 )

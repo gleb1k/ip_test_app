@@ -21,3 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "IP Test App"
 include(":app")
+include(":core")
+include(":feature")
+include(":ui")
+include(":core:arch")

@@ -40,7 +40,6 @@ fun Project.androidModule(
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
 
-
         compileOptions {
             sourceCompatibility = Config.sourceCompat
             targetCompatibility = Config.targetCompat

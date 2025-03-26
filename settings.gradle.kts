@@ -19,9 +19,13 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "IP Test App"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+rootProject.name = "IPTestApp"
 include(":app")
-include(":core")
-include(":feature")
-include(":ui")
 include(":core:arch")
+include(":core:database")
+include(":feature:home:api")
+include(":feature:home:impl")
+include(":ui:kit")
+include(":core:ktx")

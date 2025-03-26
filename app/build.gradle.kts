@@ -1,11 +1,10 @@
 import dagger.hilt.android.plugin.HiltExtension
 import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 import ru.glebik.tools.Plugins
+import ru.glebik.tools.Variant
 import ru.glebik.tools.androidApp
-import ru.glebik.tools.debugImpl
 import ru.glebik.tools.impl
 import ru.glebik.tools.kapt
-import ru.glebik.tools.Variant
 
 androidApp(
     pkg = "ru.glebik.iptestapp",
@@ -29,16 +28,19 @@ androidApp(
     },
     deps = {
         impl(libs.androidx.core.ktx)
-        impl(libs.androidx.lifecycle.runtime.ktx)
-        impl(libs.androidx.activity.compose)
         impl(platform(libs.androidx.compose.bom))
-        impl(libs.androidx.ui)
-        impl(libs.androidx.ui.graphics)
-        impl(libs.androidx.ui.tooling.preview)
-        impl(libs.androidx.material3)
-        debugImpl(libs.androidx.ui.tooling)
-
         impl(libs.googleDagger.hiltAndroid)
         kapt(libs.googleDagger.hiltCompiler)
+
+        impl(projects.core.ktx)
+        impl(projects.core.database)
+        impl(projects.core.arch)
+
+        impl(projects.ui.kit)
+
+        impl(projects.feature.home.api)
+        impl(projects.feature.home.impl)
+
+
     }
 )

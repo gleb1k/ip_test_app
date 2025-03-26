@@ -1,0 +1,58 @@
+[versions]
+gradle = "8.1.4"
+agp = "8.96.1"
+kotlin = "2.1.20"
+coreKtx = "1.15.0"
+lifecycleRuntimeKtx = "2.8.7"
+activityCompose = "1.10.1"
+composeBom = "2025.03.00"
+
+hiltPluginVersion = "2.49"
+hilt-navigation-compose = "1.2.0"
+hilt = "2.49"
+
+kotlin-gradle-plugin = "2.1.20"
+kotlin-immutable = "0.3.7"
+kotlinx-coroutines-core = "1.10.1"
+
+room = "2.6.1"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+
+andoridx-hiltNavigationCompose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
+googleDagger-hiltAndroid = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+googleDagger-hiltCompiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+
+androidx-roomKtx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-roomRuntime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidX-roomCompiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+
+jetbrains-kotlinxCollectionsImmutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlin-immutable" }
+jetbrains-kotlinxCoroutinesCore = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
+
+androidToolsBuild-gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
+androidToolsBuild-gradle-api = { group = "com.android.tools.build", name = "gradle-api", version.ref = "gradle" }
+jetbrains-kotlinGradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-gradle-plugin" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
+hiltPlugin = { id = "com.google.dagger.hilt.android", version.ref = "hiltPluginVersion" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+
+[bundles]
+compose = ["androidx-activity-compose", "androidx-compose-bom", "androidx-ui", "androidx-ui-graphics", "androidx-ui-tooling", "androidx-ui-tooling-preview", "androidx-material3","andoridx-hiltNavigationCompose"]
+#room без androidX-roomCompiler
+room = ["androidx-roomKtx", "androidx-roomRuntime"]

@@ -1,5 +1,5 @@
 [versions]
-gradle = "8.1.4"
+gradle = "8.9.1"
 agp = "8.96.1"
 kotlin = "2.1.20"
 coreKtx = "1.15.0"
@@ -22,7 +22,6 @@ desugar-jdk-libs = "2.1.5"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleRuntimeKtx" }
 
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
@@ -45,7 +44,6 @@ jetbrains-kotlinxCollectionsImmutable = { group = "org.jetbrains.kotlinx", name 
 jetbrains-kotlinxCoroutinesCore = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
 
 androidToolsBuild-gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
-androidToolsBuild-gradle-api = { group = "com.android.tools.build", name = "gradle-api", version.ref = "gradle" }
 jetbrains-kotlinGradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-gradle-plugin" }
 
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }

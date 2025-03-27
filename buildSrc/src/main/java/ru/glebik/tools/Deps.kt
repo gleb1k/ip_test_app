@@ -11,3 +11,5 @@ fun DependencyHandlerScope.debugImpl(dep: Any) = add("debugImplementation", dep)
 fun DependencyHandlerScope.releaseImpl(dep: Any) = add("releaseImplementation", dep)
 
 fun DependencyHandlerScope.kapt(dep: Any) = add("kapt", dep)
+
+fun DependencyHandlerScope.coreDesugaring(dep: Any) = add("coreLibraryDesugaring", dep)

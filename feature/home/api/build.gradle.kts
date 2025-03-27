@@ -1,11 +1,11 @@
-import ru.glebik.tools.Plugins
 import ru.glebik.tools.androidModule
-import ru.glebik.tools.impl
-import ru.glebik.tools.kapt
+import ru.glebik.tools.coreDesugaring
 
 androidModule(
     pkg = "ru.glebik.feature.home.api",
-    useCompose = true,
+    useCompose = false,
+    desugaringEnabled = true,
     deps = {
+        coreDesugaring(libs.androidTools.desugarJdkLibs)
     }
 )

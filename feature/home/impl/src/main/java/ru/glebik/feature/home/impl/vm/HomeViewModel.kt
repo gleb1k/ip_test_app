@@ -1,19 +1,24 @@
 package ru.glebik.feature.home.impl.vm
 
-import kotlinx.collections.immutable.persistentListOf
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.update
 import ru.glebik.core.arch.MviViewModel
 import ru.glebik.core.arch.util.content
 import ru.glebik.core.arch.util.failure
 import ru.glebik.core.arch.util.loading
-import ru.glebik.feature.home.impl.model.ProductUiModel
-import ru.glebik.feature.home.impl.model.TagUiModel
+import ru.glebik.feature.home.api.model.ProductModel
+import ru.glebik.feature.home.impl.mapper.ui.ProductUiMapper
 import ru.glebik.feature.home.impl.vm.state.HomeEffect
 import ru.glebik.feature.home.impl.vm.state.HomeIntent
 import ru.glebik.feature.home.impl.vm.state.HomeState
+import java.time.LocalDateTime
 
-internal class HomeViewModel(
-
+//internal не навесить на весь модуль, тк HomeScreen() вызывается напрямую из MainActivity (нужна прослойка навигации)
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val productUiMapper: ProductUiMapper,
 ) : MviViewModel<HomeState, HomeEffect, HomeIntent>() {
 
     init {
@@ -28,66 +33,49 @@ internal class HomeViewModel(
     override fun handleIntent(intent: HomeIntent) {
         when (intent) {
             HomeIntent.Load -> load()
-            is HomeIntent.OnEditProductClick -> TODO()
-            is HomeIntent.OnRemoveProductClick -> TODO()
-            is HomeIntent.OnSearchQueryChange -> TODO()
-            HomeIntent.OnSearchClick -> TODO()
+            is HomeIntent.OnEditProductClick -> onEditProductClick(intent.productId)
+            is HomeIntent.OnRemoveProductClick -> onRemoveProductClick(intent.productId)
+            is HomeIntent.OnSearchQueryChange -> onSearchQueryChange(intent.query)
+            HomeIntent.OnSearchClick -> onSearchClick()
         }
     }
 
-
     private fun load() {
-        val stub = persistentListOf(
-            ProductUiModel(
-                id = 1739,
-                name = "Iphone 13",
-                time = "01.10.2021",
-                tags = persistentListOf(
-                    TagUiModel("что-то"),
-                    TagUiModel("что-то2"),
-                    TagUiModel("что-то3")
-                ),
-                amount = 15
+        val products = listOf(
+            ProductModel(
+                id = 3806,
+                name = "Tania Parsons",
+                time = LocalDateTime.now(),
+                tags = listOf(),
+                amount = 7867
             ),
-            ProductUiModel(
-                id = 173,
-                name = "Iphone 13",
-                time = "01.10.2021",
-                tags = persistentListOf(
-                    TagUiModel("что-то"),
-                    TagUiModel("что-то2"),
-                    TagUiModel("большой тэг")
-                ),
-                amount = 15
-            ),
-            ProductUiModel(
-                id = 1,
-                name = "Iphone 13",
-                time = "01.10.2021",
-                tags = persistentListOf(
-                    TagUiModel("что-то"),
-                    TagUiModel("что-то2"),
-                ),
-                amount = 15
-            ),
+            ProductModel(
+                id = 386,
+                name = "Tania Parsons",
+                time = LocalDateTime.now(),
+                tags = listOf(),
+                amount = 7867
+            )
         )
+
+        val uiProducts = products.map { productUiMapper.transform(it) }.toPersistentList()
 
         mutableState.update {
             it.copy(
-                products = content(stub)
+                products = content(uiProducts)
             )
         }
     }
 
-    private fun onEditProductClick() {
+    private fun onEditProductClick(productId: Int) {
 
     }
 
-    private fun onRemoveProductClick() {
+    private fun onRemoveProductClick(productId: Int) {
 
     }
 
-    private fun onSearchQueryChange() {
+    private fun onSearchQueryChange(query: String) {
 
     }
 

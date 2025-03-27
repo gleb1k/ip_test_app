@@ -2,7 +2,7 @@ package ru.glebik.feature.home.impl.model
 
 import kotlinx.collections.immutable.PersistentList
 
-internal data class ProductUiModel(
+data class ProductUiModel(
     val id: Int,
     val name: String,
     val time: String,

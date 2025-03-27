@@ -28,10 +28,9 @@ import ru.glebik.ui.kit.util.CollectEffect
 
 @Composable
 fun HomeScreen(
-
+    viewModel : HomeViewModel = hiltViewModel()
 ) {
 
-    val viewModel = hiltViewModel<HomeViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     CollectEffect(viewModel.effect) {

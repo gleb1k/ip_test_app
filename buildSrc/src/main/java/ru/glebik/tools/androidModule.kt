@@ -12,6 +12,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 fun Project.androidModule(
     pkg: String,
     useCompose: Boolean,
+    desugaringEnabled: Boolean = false,
     plugins: List<String> = emptyList(),
     deps: DependencyHandlerScope.() -> Unit,
 ) {
@@ -41,6 +42,7 @@ fun Project.androidModule(
         }
 
         compileOptions {
+            isCoreLibraryDesugaringEnabled = desugaringEnabled
             sourceCompatibility = Config.sourceCompat
             targetCompatibility = Config.targetCompat
         }

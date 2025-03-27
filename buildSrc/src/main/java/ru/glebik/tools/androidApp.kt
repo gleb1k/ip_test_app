@@ -75,6 +75,7 @@ fun Project.androidApp(
         }
 
         compileOptions {
+            isCoreLibraryDesugaringEnabled = true
             sourceCompatibility = Config.sourceCompat
             targetCompatibility = Config.targetCompat
         }

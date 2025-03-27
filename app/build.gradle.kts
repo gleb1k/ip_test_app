@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 import ru.glebik.tools.Plugins
 import ru.glebik.tools.Variant
 import ru.glebik.tools.androidApp
+import ru.glebik.tools.coreDesugaring
 import ru.glebik.tools.impl
 import ru.glebik.tools.kapt
 
@@ -31,6 +32,7 @@ androidApp(
         impl(platform(libs.androidx.compose.bom))
         impl(libs.googleDagger.hiltAndroid)
         kapt(libs.googleDagger.hiltCompiler)
+        coreDesugaring(libs.androidTools.desugarJdkLibs)
 
         impl(projects.core.ktx)
         impl(projects.core.database)
@@ -40,7 +42,5 @@ androidApp(
 
         impl(projects.feature.home.api)
         impl(projects.feature.home.impl)
-
-
     }
 )

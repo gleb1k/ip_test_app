@@ -24,6 +24,6 @@ internal fun HomeTopBar() {
             .fillMaxWidth()
             .background(AppTheme.colors.primary)
     ) {
-        Text(text = stringResource(R.string.home_header), style = AppTheme.visifyTypography.header)
+        Text(text = stringResource(R.string.home_header), style = AppTheme.typography.header)
     }
 }

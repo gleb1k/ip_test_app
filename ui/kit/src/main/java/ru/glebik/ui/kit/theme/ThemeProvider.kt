@@ -13,7 +13,7 @@ object AppTheme {
         @Composable
         get() = LocalCustomColors.current
 
-    val visifyTypography: Typography
+    val typography: Typography
         @Composable
         get() = LocalCustomTypography.current
 

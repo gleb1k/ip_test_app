@@ -17,12 +17,6 @@ sealed interface ViewProperty<out R> {
         get() = this is Error
 }
 
-inline fun <R> ViewProperty<R>.requireContent(action: (R) -> Unit) {
-    safeContent?.let {
-        action(it)
-    }
-}
-
 val <R> ViewProperty<R>.safeContent: R?
     get() = (this as? ViewProperty.Content)?.content
 

@@ -7,5 +7,5 @@ import ru.glebik.feature.home.impl.model.ProductUiModel
 
 data class HomeState(
     val searchQuery: String,
-    val products: ViewProperty<PersistentList<ProductUiModel>>
+    val products: ViewProperty<PersistentList<ProductUiModel>>,
 ) : MviState

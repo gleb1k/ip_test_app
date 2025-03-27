@@ -24,5 +24,7 @@ androidModule(
         coreDesugaring(libs.androidTools.desugarJdkLibs)
         impl(libs.googleDagger.hiltAndroid)
         kapt(libs.googleDagger.hiltCompiler)
+        impl(libs.bundles.room)
+        kapt(libs.androidX.roomCompiler)
     }
 )

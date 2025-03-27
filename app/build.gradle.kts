@@ -33,6 +33,9 @@ androidApp(
         impl(libs.googleDagger.hiltAndroid)
         kapt(libs.googleDagger.hiltCompiler)
         coreDesugaring(libs.androidTools.desugarJdkLibs)
+        impl(libs.bundles.room)
+        kapt(libs.androidX.roomCompiler)
+        impl(libs.gson)
 
         impl(projects.core.ktx)
         impl(projects.core.database)

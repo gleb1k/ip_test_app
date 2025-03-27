@@ -61,7 +61,7 @@ internal fun ProductItem(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = product.name, style = AppTheme.visifyTypography.header)
+                Text(text = product.name, style = AppTheme.typography.header)
 
                 Row {
                     IconButton(

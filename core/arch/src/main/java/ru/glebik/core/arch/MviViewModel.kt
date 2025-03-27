@@ -21,7 +21,7 @@ abstract class MviViewModel<S, E, I> :
     ViewModel() where S : MviState, E : MviEffect, I : MviIntent {
 
     protected val mutableState by lazy { MutableStateFlow(initialState()) }
-    protected val visifyState: S
+    protected val mviState: S
         get() = state.value
     val state: StateFlow<S>
         get() = mutableState.asStateFlow()

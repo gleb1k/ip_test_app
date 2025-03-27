@@ -31,11 +31,8 @@ class HomeRepositoryImpl @Inject constructor(
         dao.deleteProductById(productId)
     }
 
-    override suspend fun increaseProductAmount(productId: Int) {
-        dao.increaseAmount(productId)
-    }
-
-    override suspend fun decreaseProductAmount(productId: Int) {
-        dao.decreaseAmount(productId)
+    override suspend fun changeProductAmount(productId: Int, amount: Int) {
+        val actualAmount = if (amount < 0) 0 else amount
+        dao.updateAmount(productId, actualAmount)
     }
 }

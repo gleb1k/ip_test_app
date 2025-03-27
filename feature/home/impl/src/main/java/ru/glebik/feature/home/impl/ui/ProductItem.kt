@@ -26,6 +26,8 @@ import androidx.compose.ui.res.stringResource
 import ru.glebik.feature.home.impl.R
 import ru.glebik.feature.home.impl.model.ProductUiModel
 import ru.glebik.ui.kit.theme.AppTheme
+import ru.glebik.ui.kit.theme.values.bodyBold
+import ru.glebik.ui.kit.theme.values.headerBold
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -61,7 +63,7 @@ internal fun ProductItem(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = product.name, style = AppTheme.typography.header)
+                Text(text = product.name, style = AppTheme.typography.headerBold)
 
                 Row {
                     IconButton(
@@ -92,7 +94,6 @@ internal fun ProductItem(
 
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(AppTheme.padding.p8dp),
-                verticalArrangement = Arrangement.spacedBy(AppTheme.padding.p8dp),
             ) {
                 product.tags.forEach { chip ->
                     AssistChip(
@@ -106,11 +107,11 @@ internal fun ProductItem(
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                ) {
+            ) {
                 DescriptionItem(
                     modifier = Modifier.weight(1f),
                     title = stringResource(R.string.home_product_item_in_stock),
-                    content = product.amount.toString(),
+                    content = if (product.amount <= 0) stringResource(R.string.home_amount_empty) else product.amount.toString(),
                 )
 
                 DescriptionItem(
@@ -132,7 +133,7 @@ private fun DescriptionItem(
     Column(
         modifier
     ) {
-        Text(text = title)
-        Text(text = content)
+        Text(text = title, style = AppTheme.typography.bodyBold)
+        Text(text = content, style = AppTheme.typography.body)
     }
 }

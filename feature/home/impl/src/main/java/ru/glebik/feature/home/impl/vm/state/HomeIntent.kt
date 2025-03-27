@@ -8,4 +8,9 @@ sealed interface HomeIntent : MviIntent {
     data object OnSearchClick : HomeIntent
     data class OnRemoveProductClick(val productId: Int) : HomeIntent
     data class OnEditProductClick(val productId: Int) : HomeIntent
+
+    data object OnHideAmountDialog : HomeIntent
+    data object OnConfirmDialogClick : HomeIntent
+    data object OnIncreaseDialogClick : HomeIntent
+    data object OnDecreaseDialogClick : HomeIntent
 }

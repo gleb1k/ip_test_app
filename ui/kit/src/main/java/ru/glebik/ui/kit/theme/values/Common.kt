@@ -17,7 +17,6 @@ data class Colors(
 
 data class Typography(
     val body: TextStyle,
-    val chips: TextStyle,
     val header: TextStyle,
 )
 
@@ -32,4 +31,5 @@ data class Padding(
 
 data class CornerShape(
     val rounded: CornerBasedShape,
+    val roundedBig: CornerBasedShape,
 )

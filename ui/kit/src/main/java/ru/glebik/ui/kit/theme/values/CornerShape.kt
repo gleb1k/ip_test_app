@@ -5,4 +5,5 @@ import androidx.compose.ui.unit.dp
 
 internal val baseCornerShape = CornerShape(
     rounded = RoundedCornerShape(6.dp),
+    roundedBig = RoundedCornerShape(16.dp)
 )

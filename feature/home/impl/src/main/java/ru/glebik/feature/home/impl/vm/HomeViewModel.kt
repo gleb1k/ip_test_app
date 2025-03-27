@@ -17,12 +17,13 @@ import ru.glebik.core.arch.util.ResultWrapper
 import ru.glebik.core.arch.util.content
 import ru.glebik.core.arch.util.failure
 import ru.glebik.core.arch.util.loading
+import ru.glebik.core.arch.util.safeContent
 import ru.glebik.core.ktx.CoroutineDispatchers
-import ru.glebik.feature.home.api.domain.DecreaseProductAmountUseCase
+import ru.glebik.feature.home.api.domain.ChangeProductAmountUseCase
 import ru.glebik.feature.home.api.domain.DeleteProductUseCase
 import ru.glebik.feature.home.api.domain.GetProductsUseCase
-import ru.glebik.feature.home.api.domain.IncreaseProductAmountUseCase
 import ru.glebik.feature.home.impl.mapper.ui.ProductUiMapper
+import ru.glebik.feature.home.impl.model.ProductAmountState
 import ru.glebik.feature.home.impl.vm.state.HomeEffect
 import ru.glebik.feature.home.impl.vm.state.HomeIntent
 import ru.glebik.feature.home.impl.vm.state.HomeState
@@ -34,8 +35,7 @@ class HomeViewModel @Inject constructor(
     private val dispatchers: CoroutineDispatchers,
     private val getProductsUseCase: GetProductsUseCase,
     private val deleteProductUseCase: DeleteProductUseCase,
-    private val increaseProductAmountUseCase: IncreaseProductAmountUseCase,
-    private val decreaseProductAmountUseCase: DecreaseProductAmountUseCase,
+    private val changeProductAmountUseCase: ChangeProductAmountUseCase,
 ) : MviViewModel<HomeState, HomeEffect, HomeIntent>() {
 
     private val searchQueryPublisher = MutableSharedFlow<String>(extraBufferCapacity = 1)
@@ -58,6 +58,11 @@ class HomeViewModel @Inject constructor(
     override fun initialState(): HomeState = HomeState(
         searchQuery = INITIAL_SEARCH_QUERY_VALUE,
         products = loading(),
+        productAmountState = ProductAmountState(
+            isShow = false,
+            productId = Int.MIN_VALUE,
+            amount = Int.MIN_VALUE,
+        ),
     )
 
     override fun handleIntent(intent: HomeIntent) {
@@ -67,6 +72,10 @@ class HomeViewModel @Inject constructor(
             is HomeIntent.OnRemoveProductClick -> onRemoveProductClick(intent.productId)
             is HomeIntent.OnSearchQueryChange -> onSearchQueryChange(intent.query)
             HomeIntent.OnSearchClick -> onSearchClick()
+            HomeIntent.OnConfirmDialogClick -> onConfirmDialogClick()
+            HomeIntent.OnDecreaseDialogClick -> onDecreaseDialogClick()
+            HomeIntent.OnHideAmountDialog -> onHideAmountDialog()
+            HomeIntent.OnIncreaseDialogClick -> onIncreaseDialogClick()
         }
     }
 
@@ -99,7 +108,42 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun onEditProductClick(productId: Int) {
+        val products = mviState.products.safeContent ?: return
+        val productToShow = products.find { it.id == productId } ?: return
 
+        mutableState.update {
+            it.copy(
+                productAmountState = ProductAmountState(
+                    isShow = true, productId = productId, amount = productToShow.amount
+                )
+            )
+        }
+    }
+
+    private fun onConfirmDialogClick() {
+        viewModelScope.launchSafe(dispatchers.io) {
+            val dialogState = mviState.productAmountState
+            changeProductAmountUseCase.change(dialogState.productId, dialogState.amount)
+            handleIntent(HomeIntent.OnHideAmountDialog)
+        }
+    }
+
+    private fun onDecreaseDialogClick() {
+        mutableState.update {
+            it.copy(productAmountState = it.productAmountState.copy(amount = it.productAmountState.amount.dec()))
+        }
+    }
+
+    private fun onHideAmountDialog() {
+        mutableState.update {
+            it.copy(productAmountState = it.productAmountState.copy(isShow = false))
+        }
+    }
+
+    private fun onIncreaseDialogClick() {
+        mutableState.update {
+            it.copy(productAmountState = it.productAmountState.copy(amount = it.productAmountState.amount.inc()))
+        }
     }
 
     private fun onRemoveProductClick(productId: Int) {

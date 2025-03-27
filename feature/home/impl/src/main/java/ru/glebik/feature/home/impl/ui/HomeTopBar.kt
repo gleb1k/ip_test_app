@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ru.glebik.feature.home.impl.R
 import ru.glebik.ui.kit.theme.AppTheme
+import ru.glebik.ui.kit.theme.values.headerBold
 
 @Composable
 internal fun HomeTopBar() {
@@ -24,6 +25,6 @@ internal fun HomeTopBar() {
             .fillMaxWidth()
             .background(AppTheme.colors.primary)
     ) {
-        Text(text = stringResource(R.string.home_header), style = AppTheme.typography.header)
+        Text(text = stringResource(R.string.home_header), style = AppTheme.typography.headerBold)
     }
 }

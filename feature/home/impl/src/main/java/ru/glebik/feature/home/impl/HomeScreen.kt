@@ -21,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.PersistentList
 import ru.glebik.core.arch.util.ViewProperty
+import ru.glebik.feature.home.impl.mapper.ui.ProductAmountDialog
 import ru.glebik.feature.home.impl.model.ProductUiModel
 import ru.glebik.feature.home.impl.ui.HomeSearchField
 import ru.glebik.feature.home.impl.ui.HomeTopBar
@@ -41,13 +42,21 @@ fun HomeScreen(
 
     CollectEffect(viewModel.effect) {
         when (it) {
-            is HomeEffect.HideProductAmountDialog -> TODO()
-            is HomeEffect.ShowProductAmountDialog -> TODO()
+            is HomeEffect.ShowSnackBar -> {
+
+            }
         }
     }
 
     HomeView(state, viewModel::handleIntent)
 
+    ProductAmountDialog(
+        onDismissRequest = { viewModel.handleIntent(HomeIntent.OnHideAmountDialog) },
+        onConfirmClick = { viewModel.handleIntent(HomeIntent.OnConfirmDialogClick) },
+        onIncreaseClick = { viewModel.handleIntent(HomeIntent.OnIncreaseDialogClick) },
+        onDecreaseClick = { viewModel.handleIntent(HomeIntent.OnDecreaseDialogClick) },
+        state = state.productAmountState
+    )
 }
 
 @Composable
@@ -89,7 +98,7 @@ private fun HomeView(
             when (val property = state.products) {
                 is ViewProperty.Content -> homeProductsItems(property.content, handleIntent)
                 is ViewProperty.Error -> {
-                    item{
+                    item {
                         Column(
                             Modifier.fillMaxWidth(),
                             horizontalAlignment = Alignment.CenterHorizontally

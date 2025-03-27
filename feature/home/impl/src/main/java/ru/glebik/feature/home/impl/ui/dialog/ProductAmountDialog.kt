@@ -1,4 +1,4 @@
-package ru.glebik.feature.home.impl.mapper.ui
+package ru.glebik.feature.home.impl.ui.dialog
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import ru.glebik.feature.home.impl.R
-import ru.glebik.feature.home.impl.model.ProductAmountState
+import ru.glebik.feature.home.impl.model.dialog.ProductAmountState
 import ru.glebik.ui.kit.theme.AppTheme
 import ru.glebik.ui.kit.theme.values.bodyBold
 import ru.glebik.ui.kit.util.clickableNoInteraction

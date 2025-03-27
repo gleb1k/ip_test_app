@@ -1,4 +1,4 @@
-package ru.glebik.feature.home.impl.model
+package ru.glebik.feature.home.impl.model.dialog
 
 data class ProductAmountState(
     val isShow: Boolean,

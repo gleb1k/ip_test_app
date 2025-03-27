@@ -9,4 +9,9 @@
     <string name="home_dialog_cancel">Отмена</string>
     <string name="home_dialog_confirm">Принять</string>
     <string name="home_amount_empty">Нет в наличии</string>
+
+    <string name="home_dialog_delete_product_title">Удаление товара</string>
+    <string name="home_dialog_delete_product_desc">Вы действительно хотите удалить выбранный товар?</string>
+    <string name="home_yes">Да</string>
+    <string name="home_no">Нет</string>
 </resources>

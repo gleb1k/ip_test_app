@@ -21,11 +21,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.PersistentList
 import ru.glebik.core.arch.util.ViewProperty
-import ru.glebik.feature.home.impl.mapper.ui.ProductAmountDialog
 import ru.glebik.feature.home.impl.model.ProductUiModel
 import ru.glebik.feature.home.impl.ui.HomeSearchField
 import ru.glebik.feature.home.impl.ui.HomeTopBar
 import ru.glebik.feature.home.impl.ui.ProductItem
+import ru.glebik.feature.home.impl.ui.dialog.ProductAmountDialog
+import ru.glebik.feature.home.impl.ui.dialog.ProductRemoveDialog
 import ru.glebik.feature.home.impl.vm.HomeViewModel
 import ru.glebik.feature.home.impl.vm.state.HomeEffect
 import ru.glebik.feature.home.impl.vm.state.HomeIntent
@@ -51,11 +52,17 @@ fun HomeScreen(
     HomeView(state, viewModel::handleIntent)
 
     ProductAmountDialog(
-        onDismissRequest = { viewModel.handleIntent(HomeIntent.OnHideAmountDialog) },
-        onConfirmClick = { viewModel.handleIntent(HomeIntent.OnConfirmDialogClick) },
+        onDismissRequest = { viewModel.handleIntent(HomeIntent.HideChangeAmountDialog) },
+        onConfirmClick = { viewModel.handleIntent(HomeIntent.OnConfirmChangeAmountDialogClick) },
         onIncreaseClick = { viewModel.handleIntent(HomeIntent.OnIncreaseDialogClick) },
         onDecreaseClick = { viewModel.handleIntent(HomeIntent.OnDecreaseDialogClick) },
         state = state.productAmountState
+    )
+
+    ProductRemoveDialog(
+        state = state.productRemoveState,
+        onDismissRequest = { viewModel.handleIntent(HomeIntent.HideRemoveProductDialog) },
+        onConfirmClick = { viewModel.handleIntent(HomeIntent.OnConfirmRemoveProductDialogClick) }
     )
 }
 

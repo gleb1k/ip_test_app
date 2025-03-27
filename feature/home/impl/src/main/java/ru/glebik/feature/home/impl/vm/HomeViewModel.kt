@@ -23,7 +23,8 @@ import ru.glebik.feature.home.api.domain.ChangeProductAmountUseCase
 import ru.glebik.feature.home.api.domain.DeleteProductUseCase
 import ru.glebik.feature.home.api.domain.GetProductsUseCase
 import ru.glebik.feature.home.impl.mapper.ui.ProductUiMapper
-import ru.glebik.feature.home.impl.model.ProductAmountState
+import ru.glebik.feature.home.impl.model.dialog.ProductAmountState
+import ru.glebik.feature.home.impl.model.dialog.ProductRemoveState
 import ru.glebik.feature.home.impl.vm.state.HomeEffect
 import ru.glebik.feature.home.impl.vm.state.HomeIntent
 import ru.glebik.feature.home.impl.vm.state.HomeState
@@ -63,6 +64,10 @@ class HomeViewModel @Inject constructor(
             productId = Int.MIN_VALUE,
             amount = Int.MIN_VALUE,
         ),
+        productRemoveState = ProductRemoveState(
+            isShow = false,
+            productId = Int.MIN_VALUE
+        )
     )
 
     override fun handleIntent(intent: HomeIntent) {
@@ -72,10 +77,12 @@ class HomeViewModel @Inject constructor(
             is HomeIntent.OnRemoveProductClick -> onRemoveProductClick(intent.productId)
             is HomeIntent.OnSearchQueryChange -> onSearchQueryChange(intent.query)
             HomeIntent.OnSearchClick -> onSearchClick()
-            HomeIntent.OnConfirmDialogClick -> onConfirmDialogClick()
+            HomeIntent.OnConfirmChangeAmountDialogClick -> onConfirmChangeAmountDialogClick()
             HomeIntent.OnDecreaseDialogClick -> onDecreaseDialogClick()
-            HomeIntent.OnHideAmountDialog -> onHideAmountDialog()
+            HomeIntent.HideChangeAmountDialog -> onHideAmountDialog()
             HomeIntent.OnIncreaseDialogClick -> onIncreaseDialogClick()
+            HomeIntent.HideRemoveProductDialog -> hideRemoveProductDialog()
+            HomeIntent.OnConfirmRemoveProductDialogClick -> onConfirmRemoveProductDialogClick()
         }
     }
 
@@ -86,9 +93,14 @@ class HomeViewModel @Inject constructor(
     private fun loadProductsInternal(query: String) {
         viewModelScope.launchSafe(dispatchers.io) {
             getProductsUseCase.search(query).collect { productsWrapper ->
-                when (val wrapper = productsWrapper) {
-                    is ResultWrapper.Failure -> {
-
+                when (productsWrapper) {
+                    is ResultWrapper.Failure -> mutableState.update {
+                        it.copy(
+                            products = failure(
+                                productsWrapper.exception?.localizedMessage.orEmpty(),
+                                productsWrapper.exception
+                            )
+                        )
                     }
 
                     ResultWrapper.Loading -> mutableState.update {
@@ -96,7 +108,7 @@ class HomeViewModel @Inject constructor(
                     }
 
                     is ResultWrapper.Success -> {
-                        val mapped = wrapper.value.map {
+                        val mapped = productsWrapper.value.map {
                             productUiMapper.transform(it)
                         }.toPersistentList()
 
@@ -104,6 +116,19 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    private fun hideRemoveProductDialog() {
+        mutableState.update {
+            it.copy(productRemoveState = it.productRemoveState.copy(isShow = false))
+        }
+    }
+
+    private fun onConfirmRemoveProductDialogClick() {
+        viewModelScope.launchSafe(dispatchers.io) {
+            deleteProductUseCase.delete(mviState.productRemoveState.productId)
+            handleIntent(HomeIntent.HideRemoveProductDialog)
         }
     }
 
@@ -120,11 +145,11 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun onConfirmDialogClick() {
+    private fun onConfirmChangeAmountDialogClick() {
         viewModelScope.launchSafe(dispatchers.io) {
             val dialogState = mviState.productAmountState
             changeProductAmountUseCase.change(dialogState.productId, dialogState.amount)
-            handleIntent(HomeIntent.OnHideAmountDialog)
+            handleIntent(HomeIntent.HideChangeAmountDialog)
         }
     }
 
@@ -147,8 +172,10 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun onRemoveProductClick(productId: Int) {
-        viewModelScope.launchSafe(dispatchers.io) {
-            deleteProductUseCase.delete(productId)
+        mutableState.update {
+            it.copy(
+                productRemoveState = ProductRemoveState(isShow = true, productId = productId)
+            )
         }
     }
 
